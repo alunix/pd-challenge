@@ -46,25 +46,11 @@ public class Weather {
         this.weatherType = apiWrapper.getWeatherType();
     }
 
-    public static List<Weather> getMockList() {
-        List<Weather> weatherList = new ArrayList<>();
-
-        weatherList.add(new Weather("london", "16:00", "21°", Weather.TYPE_SUN));
-        weatherList.add(new Weather("reijavik", "17:00", "2°", Weather.TYPE_RAIN));
-        weatherList.add(new Weather("dublin", "20:00", "18°", Weather.TYPE_CLOUDY));
-        weatherList.add(new Weather("beijing", "03:00", "20°", Weather.TYPE_CLOUDY));
-        weatherList.add(new Weather("sidney", "12:00", "21°", Weather.TYPE_SUN));
-        weatherList.add(new Weather("warsaw", "19:00", "2°", Weather.TYPE_CLOUDY));
-        weatherList.add(new Weather("copenhagem", "12:00", "21°", Weather.TYPE_SUN));
-
-        return weatherList;
-    }
-
     public static List<String> getDefaultCities() {
         return Arrays.asList(new String[]{"Dublin", "London", "Beijing", "Sydney"});
     }
 
-    public static void saveMyCitiesByWeather(Context context, List<Weather> weatherList) {
+    public static void saveMyCitiesByWeatherList(Context context, List<Weather> weatherList) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < weatherList.size(); i++) {
             sb.append(weatherList.get(i).city);
@@ -76,7 +62,7 @@ public class Weather {
         PreferencesUtil.savePreference(context, Constants.PREF_KEY_MY_CITIES, sb.toString());
     }
 
-    public static void saveMyCitiesByString(Context context, List<String> citiesList) {
+    public static void saveMyCitiesByStringList(Context context, List<String> citiesList) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < citiesList.size(); i++) {
             sb.append(citiesList.get(i));
@@ -116,7 +102,7 @@ public class Weather {
         return new Weather(city, time.length() == 1 ? "0" + time + ":00" : time + ":00", tempture + "˚", weatherType);
     }
 
-    public static List<Weather> getWeatherListByCities(List<String> citiesList) {
+    public static List<Weather> getRandomWeatherListByCities(List<String> citiesList) {
         List<Weather> weatherList = new ArrayList<Weather>();
         for (String city : citiesList) {
             weatherList.add(Weather.getRandomWeather(city));

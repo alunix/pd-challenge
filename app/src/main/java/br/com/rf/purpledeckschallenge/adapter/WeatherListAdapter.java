@@ -2,7 +2,6 @@ package br.com.rf.purpledeckschallenge.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -49,8 +48,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private Activity mActivity;
 
     private boolean mEditEnabled = false;
-
-    private ViewHolder mViewHolder;
 
     public WeatherListAdapter(Activity activity, List<Weather> weatherList) {
         mList = weatherList;
@@ -114,13 +111,13 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                 public void onClick(View v) {
                     if (getItemCount() == 1) {
                         mEditEnabled = false;
-                        Toast.makeText(context, "You cannot remove the last item", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.msg_you_cannot_remove), Toast.LENGTH_SHORT).show();
                         notifyDataSetChanged();
                     } else {
                         mList.remove(position);
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, getItemCount());
-                        Weather.saveMyCitiesByWeather(context, mList);
+                        Weather.saveMyCitiesByWeatherList(context, mList);
                     }
                 }
             });
@@ -171,7 +168,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     public void addItem(Weather weather) {
         mList.add(weather);
-        Weather.saveMyCitiesByWeather(mActivity, mList);
+        Weather.saveMyCitiesByWeatherList(mActivity, mList);
         notifyItemInserted(getItemCount());
         notifyItemRangeChanged(getItemCount() - 1, getItemCount());
 

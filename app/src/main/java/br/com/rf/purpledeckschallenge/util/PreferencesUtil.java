@@ -8,9 +8,6 @@ import android.preference.PreferenceManager;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by rodrigo.ferreira on 26/02/2015.
- */
 public class PreferencesUtil {
     private static Map<Context, SharedPreferences> preferences = new HashMap<Context, SharedPreferences>();
 

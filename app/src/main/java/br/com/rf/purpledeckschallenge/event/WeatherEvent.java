@@ -51,9 +51,4 @@ public class WeatherEvent {
 
     }
 
-    public class UpdateList {
-
-    }
-
-
 }

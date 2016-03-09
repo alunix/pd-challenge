@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,8 +12,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import br.com.rf.purpledeckschallenge.R;
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public void init() {
         if (PreferencesUtil.getBooleanPreference(this, Constants.PREF_KEY_FIRST_SETUP, true)) {
             //save default infos and change pref value
-            Weather.saveMyCitiesByString(this, Weather.getDefaultCities());
+            Weather.saveMyCitiesByStringList(this, Weather.getDefaultCities());
             PreferencesUtil.savePreference(this, Constants.PREF_KEY_FIRST_SETUP, false);
         }
     }
@@ -103,12 +100,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateList(WeatherEvent.UpdateList event) {
-        Toast.makeText(this, "Item removido: " + mAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void responseSuccessful(WeatherEvent.SuccessRetrieveList event) {
         loadList(event.weatherList);
     }
@@ -122,18 +113,18 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void errorCityAdded(WeatherEvent.ErrorCityAdded event) {
         dismissLoading();
-        Toast.makeText(this, "Sorry, we didn't found the city that you've searched :/", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.msg_error_search_city, Toast.LENGTH_LONG).show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void cityAlreadyExists(WeatherEvent.CityAlreadyExists event) {
         dismissLoading();
-        Toast.makeText(this, "The city \'" + event.city + "\' already exists!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.msg_city_already_exists, event.city), Toast.LENGTH_SHORT).show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showLoading(WeatherEvent.ShowLoading event) {
-        mProgressDialog = ProgressDialog.show(this, null, "Searching city...", true, false);
+        mProgressDialog = ProgressDialog.show(this, null, getString(R.string.msg_searching_city), true, false);
     }
 
     public void dismissLoading() {
