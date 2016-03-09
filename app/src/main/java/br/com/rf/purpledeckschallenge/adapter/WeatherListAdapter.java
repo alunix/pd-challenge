@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +18,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import br.com.rf.purpledeckschallenge.R;
+import br.com.rf.purpledeckschallenge.event.WeatherEvent;
 import br.com.rf.purpledeckschallenge.http.RestFacade;
 import br.com.rf.purpledeckschallenge.model.FlickrPhoto;
 import br.com.rf.purpledeckschallenge.model.Weather;
@@ -42,6 +44,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private Activity mActivity;
 
     private boolean mEditEnabled = false;
+
+    private ViewHolder mViewHolder;
 
     public WeatherListAdapter(Activity activity, List<Weather> weatherList) {
         mList = weatherList;
@@ -140,18 +144,28 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                 public boolean onEditorAction(TextView v, int actionId,
                                               KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_SEND && v.getText().toString().trim().length() > 0) {
-                        mList.add(Weather.getRandomWeather(v.getText().toString().trim()));
-                        notifyItemInserted(getItemCount());
-                        notifyItemRangeChanged(getItemCount() - 1, getItemCount());
                         GUIUtils.hideKeyboard(mActivity);
-                        holder.mEditAddCity.setText("");
-                        Weather.saveMyCitiesByWeather(context, mList);
-                        return true;
+                        if (!Weather.cityAlreadyExists(context, v.getText().toString().trim())) {
+                            EventBus.getDefault().post(new WeatherEvent().new AddCity(v.getText().toString().trim()));
+                            holder.mEditAddCity.setText("");
+                            return true;
+                        } else {
+                            EventBus.getDefault().post(new WeatherEvent().new CityAlreadyExists(v.getText().toString().trim()));
+                            holder.mEditAddCity.setText("");
+                            return true;
+                        }
                     }
                     return false;
                 }
             });
         }
+    }
+
+    public void addItem(Weather weather) {
+        mList.add(weather);
+        Weather.saveMyCitiesByWeather(mActivity, mList);
+        notifyItemInserted(getItemCount());
+        notifyItemRangeChanged(getItemCount() - 1, getItemCount());
 
     }
 

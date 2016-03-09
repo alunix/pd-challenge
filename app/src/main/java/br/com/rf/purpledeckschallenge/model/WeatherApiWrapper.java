@@ -1,8 +1,8 @@
 package br.com.rf.purpledeckschallenge.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -20,7 +20,12 @@ public class WeatherApiWrapper {
     public String getDt() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTimeInMillis(dt * 1000);
-        return calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE);
+
+        Date date = new Date(dt * 1000L); // *1000 is to convert seconds to milliseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); // the format of your date
+        sdf.setTimeZone(TimeZone.getDefault()); // give a timezone reference for formating (see comment at the bottom
+
+        return sdf.format(date);
     }
 
     public String getCity() {

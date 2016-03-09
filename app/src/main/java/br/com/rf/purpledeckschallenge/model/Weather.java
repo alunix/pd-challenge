@@ -97,6 +97,17 @@ public class Weather {
 
     }
 
+    public static boolean cityAlreadyExists(Context context, String city) {
+        List<String> cities = Weather.getMySavedCities(context);
+
+        for (String savedCity : cities) {
+            if (city.toLowerCase().equals(savedCity.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static Weather getRandomWeather(String city) {
         Random random = new Random();
         String time = String.valueOf(random.nextInt(24) + 1);
@@ -134,11 +145,13 @@ public class Weather {
     }
 
     public static int getSupportedWeatherType(String weatherType) {
-        if ("Thunderstorm".equals(weatherType) || "Drizzle".equals(weatherType)
-                || "Rain".equals(weatherType) || "Snow".equals(weatherType)) {
+        weatherType = weatherType.toLowerCase();
+        if ("Thunderstorm".toLowerCase().equals(weatherType) || "Drizzle".toLowerCase().equals(weatherType)
+                || "Rain".toLowerCase().equals(weatherType) || "Snow".toLowerCase().equals(weatherType)) {
             return TYPE_RAIN;
-        } else if ("Atmosphere".equals(weatherType) || "Clouds".equals(weatherType)
-                || "Extreme".equals(weatherType) || "Additional".equals(weatherType)) {
+        } else if ("Atmosphere".toLowerCase().equals(weatherType) || "Clouds".toLowerCase().equals(weatherType)
+                || "Extreme".toLowerCase().equals(weatherType) || "Additional".toLowerCase().equals(weatherType)
+                || "Haze".toLowerCase().equals(weatherType)) {
             return TYPE_CLOUDY;
         } else {
             return TYPE_SUN;
