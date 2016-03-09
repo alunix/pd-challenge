@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="150dp"
     android:gravity="center_horizontal">
 
     <ImageView
@@ -21,16 +21,17 @@
         android:src="@drawable/overlay_2" />
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="15dp"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:paddingLeft="34dp"
         android:paddingRight="22dp">
 
         <EditText
             android:id="@+id/item_edit_add_city"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="14dp"
             android:layout_toLeftOf="@+id/item_img_remove"
@@ -54,9 +55,11 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="75dp"
             android:layout_below="@id/item_edit_add_city"
             android:gravity="center_vertical"
+            android:paddingLeft="34dp"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
             <TextView

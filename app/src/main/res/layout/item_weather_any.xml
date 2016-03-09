@@ -2,15 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="75dp">
 
     <ImageView
         android:id="@+id/item_img_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="0.8"
         android:scaleType="centerCrop"
-        tools:src="@drawable/dublin_city"
-        android:alpha="0.8"/>
+        tools:src="@drawable/dublin_city" />
 
     <ImageView
         android:id="@+id/item_img_overlay"
@@ -19,7 +19,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/overlay_2" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -29,52 +29,58 @@
 
         <TextView
             android:id="@+id/item_text_city"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/item_text_time"
             android:layout_weight="1"
+            android:text="Reikjavik"
             android:textAllCaps="true"
             android:textColor="#fff"
-            android:textSize="12sp"
-            tools:text="Reikjavik" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/item_text_time"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="#error"
             android:textColor="#fff"
-            android:textSize="12sp"
-            tools:text="#error" />
+            android:textSize="12sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/item_text_tempture"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@+id/dummy_img"
             android:layout_weight="1"
-            android:gravity="right">
+            android:gravity="right"
+            android:text=":("
+            android:textColor="#fff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/item_text_tempture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text=":("
-                android:textColor="#fff"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/item_img_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginLeft="14dp"
-                android:layout_weight="1"
-                tools:src="@drawable/remove" />
-
-        </LinearLayout>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/item_img_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/remove" />
+        <!--a invisible img for the layout don't change when switch between remove and weather icon-->
+        <ImageView
+            android:id="@+id/dummy_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_rain"
+            android:visibility="invisible" />
+    </RelativeLayout>
 </FrameLayout>
