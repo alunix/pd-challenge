@@ -16,16 +16,18 @@ public class WeatherApiWrapper {
     public Main main;
     public long dt;
     public String name;
+    public String timeZoneId;
 
     public String getDt() {
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.setTimeInMillis(dt * 1000);
 
-        Date date = new Date(dt * 1000L); // *1000 is to convert seconds to milliseconds
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); // the format of your date
-        sdf.setTimeZone(TimeZone.getDefault()); // give a timezone reference for formating (see comment at the bottom
+        if (timeZoneId == null) {
+            return "#error";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        sdf.setTimeZone(TimeZone.getTimeZone(timeZoneId));
 
-        return sdf.format(date);
+        return sdf.format(new Date());
+
     }
 
     public String getCity() {
@@ -38,6 +40,10 @@ public class WeatherApiWrapper {
 
     public int getWeatherType() {
         return br.com.rf.purpledeckschallenge.model.Weather.getSupportedWeatherType(this.weather.get(0).main);
+    }
+
+    public String getLocation() {
+        return coord.lat + "," + coord.lon;
     }
 
     public class Coord {

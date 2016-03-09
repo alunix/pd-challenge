@@ -60,13 +60,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view;
-        if (viewType == 0) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_weather_first, parent, false);
-        } else {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_weather_any, parent, false);
-        }
+        view = LayoutInflater.from(parent.getContext())
+                .inflate(viewType, parent, false);
+
 
         return new ViewHolder(view);
     }
@@ -219,9 +215,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 0;
+            return R.layout.item_weather_first;
         } else {
-            return 1;
+            return R.layout.item_weather_any;
         }
     }
 }

@@ -28,7 +28,9 @@ public class WeatherUseCase extends BaseUseCase {
         Exception exception = null;
         for (String city : Weather.getMySavedCities(mContext)) {
             try {
-                weatherList.add(new Weather(RestFacade.getWeatherByCity(city)));
+                WeatherApiWrapper apiWrapper = RestFacade.getWeatherByCity(city);
+                apiWrapper.timeZoneId = RestFacade.getTimeZoneByLatLong(apiWrapper.getLocation()).timeZoneId;
+                weatherList.add(new Weather(apiWrapper));
             } catch (Exception e) {
                 exception = e;
             }
@@ -46,6 +48,7 @@ public class WeatherUseCase extends BaseUseCase {
         WeatherApiWrapper apiWrapper = RestFacade.getWeatherByCity(event.city);
         EventBus.getDefault().post(new WeatherEvent().new ShowLoading());
         if (apiWrapper != null && event.city.toLowerCase().equals(apiWrapper.getCity().toLowerCase())) {
+            apiWrapper.timeZoneId = RestFacade.getTimeZoneByLatLong(apiWrapper.getLocation()).timeZoneId;
             EventBus.getDefault().post(new WeatherEvent().new SuccessCityAdded(new Weather(apiWrapper)));
         } else {
             EventBus.getDefault().post(new WeatherEvent().new ErrorCityAdded());

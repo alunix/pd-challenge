@@ -1,6 +1,7 @@
 package br.com.rf.purpledeckschallenge.http;
 
 import br.com.rf.purpledeckschallenge.model.FlickrPhoto;
+import br.com.rf.purpledeckschallenge.model.TimeZoneApi;
 import br.com.rf.purpledeckschallenge.model.WeatherApiWrapper;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -24,5 +25,13 @@ public class RestFacade {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         return restAdapter.create(RestApi.class).getWeatherByCity(city);
+    }
+
+    public static TimeZoneApi getTimeZoneByLatLong(String location) {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(RestApi.TIME_ZONE_API_END_POINT)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        return restAdapter.create(RestApi.class).getTimeZoneByLatLong(location);
     }
 }
