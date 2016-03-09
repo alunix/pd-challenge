@@ -2,7 +2,11 @@ package br.com.rf.purpledeckschallenge.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -129,7 +133,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             holder.mImgType.setOnClickListener(null);
         }
 
-        if (holder.mImgRemove != null && getItemCount() > 1) {
+        if (holder.mImgRemove != null) {
             holder.mImgRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -140,6 +144,13 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
 
         if (holder.mEditAddCity != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Palette.from(((BitmapDrawable) holder.mImgOverlay.getDrawable()).getBitmap()).generate(new Palette.PaletteAsyncListener() {
+                    public void onGenerated(Palette p) {
+                        mActivity.getWindow().setStatusBarColor(p.getVibrantColor(0x000000));
+                    }
+                });
+            }
             holder.mEditAddCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId,
