@@ -28,6 +28,7 @@ import br.com.rf.purpledeckschallenge.http.RestFacade;
 import br.com.rf.purpledeckschallenge.model.FlickrPhoto;
 import br.com.rf.purpledeckschallenge.model.Weather;
 import br.com.rf.purpledeckschallenge.util.GUIUtils;
+import br.com.rf.purpledeckschallenge.util.StringUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -145,12 +146,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                                               KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_SEND && v.getText().toString().trim().length() > 0) {
                         GUIUtils.hideKeyboard(mActivity);
-                        if (!Weather.cityAlreadyExists(context, v.getText().toString().trim())) {
-                            EventBus.getDefault().post(new WeatherEvent().new AddCity(v.getText().toString().trim()));
+                        if (!Weather.cityAlreadyExists(context, StringUtils.removeAccents(v.getText().toString().trim()))) {
+                            EventBus.getDefault().post(new WeatherEvent().new AddCity(StringUtils.removeAccents(v.getText().toString().trim())));
                             holder.mEditAddCity.setText("");
                             return true;
                         } else {
-                            EventBus.getDefault().post(new WeatherEvent().new CityAlreadyExists(v.getText().toString().trim()));
+                            EventBus.getDefault().post(new WeatherEvent().new CityAlreadyExists(StringUtils.removeAccents(v.getText().toString().trim())));
                             holder.mEditAddCity.setText("");
                             return true;
                         }
