@@ -16,8 +16,8 @@ public interface RestApi {
     String PHOTO_SEARCH_API_END_POINT = "https://api.flickr.com/services";
     String TIME_ZONE_API_END_POINT = "https://maps.googleapis.com/maps/api";
 
-    @GET("/rest/?method=flickr.photos.search&api_key=34fc09eb49b0653e3bf5c3f7d94f44fa&format=json&nojsoncallback=1")
-    void searchPhotoByTag(@Query("tags") String tag, Callback<FlickrPhoto> callback);
+    @GET("/rest/?method=flickr.photos.search&api_key=34fc09eb49b0653e3bf5c3f7d94f44fa&format=json&nojsoncallback=1&accuracy=6-11&tags=landmark")
+    void searchPhotoByTag(@Query("text") String tag, Callback<FlickrPhoto> callback);
 
     @GET("/2.5/weather?units=metric&appid=44db6a862fba0b067b1930da0d769e98")
     WeatherApiWrapper getWeatherByCity(@Query("q") String city);
