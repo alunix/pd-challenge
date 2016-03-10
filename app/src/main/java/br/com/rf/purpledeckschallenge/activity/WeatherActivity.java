@@ -52,7 +52,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     public void init() {
         if (PreferencesUtil.getBooleanPreference(this, Constants.PREF_KEY_FIRST_SETUP, true)) {
-            //save default infos and change pref value
             Weather.saveMyCitiesByStringList(this, Weather.getDefaultCities());
             PreferencesUtil.savePreference(this, Constants.PREF_KEY_FIRST_SETUP, false);
         }
