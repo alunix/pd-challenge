@@ -5,12 +5,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import br.com.rf.purpledeckschallenge.R;
-import br.com.rf.purpledeckschallenge.util.Constants;
+import br.com.rf.purpledeckschallenge.util.PrefKeys;
 import br.com.rf.purpledeckschallenge.util.PreferencesUtil;
 
 /**
@@ -59,7 +57,7 @@ public class Weather {
             }
         }
         Log.d("saveCities", sb.toString());
-        PreferencesUtil.savePreference(context, Constants.PREF_KEY_MY_CITIES, sb.toString());
+        PreferencesUtil.savePreference(context, PrefKeys.PREF_KEY_MY_CITIES, sb.toString());
     }
 
     public static void saveMyCitiesByStringList(Context context, List<String> citiesList) {
@@ -71,11 +69,11 @@ public class Weather {
             }
         }
         Log.d("saveCities", sb.toString());
-        PreferencesUtil.savePreference(context, Constants.PREF_KEY_MY_CITIES, sb.toString());
+        PreferencesUtil.savePreference(context, PrefKeys.PREF_KEY_MY_CITIES, sb.toString());
     }
 
     public static List<String> getMySavedCities(Context context) {
-        String mySavedCities = PreferencesUtil.getStringPreference(context, Constants.PREF_KEY_MY_CITIES, null);
+        String mySavedCities = PreferencesUtil.getStringPreference(context, PrefKeys.PREF_KEY_MY_CITIES, null);
         if (mySavedCities == null || mySavedCities.length() == 0) {
             return new ArrayList<String>();
         }
@@ -110,25 +108,7 @@ public class Weather {
         return weatherList;
     }
 
-    public static int getTypeIconRes(int type) {
-        if (type == TYPE_SUN) {
-            return R.drawable.ic_sun;
-        } else if (type == TYPE_RAIN) {
-            return R.drawable.ic_rain;
-        } else {
-            return R.drawable.ic_cloudy;
-        }
-    }
 
-    public static int getTypeOverlayRes(int type) {
-        if (type == TYPE_SUN) {
-            return R.drawable.overlay_3;
-        } else if (type == TYPE_RAIN) {
-            return R.drawable.overlay_1;
-        } else {
-            return R.drawable.overlay_2;
-        }
-    }
 
     public static int getSupportedWeatherType(String weatherType) {
         weatherType = weatherType.toLowerCase();

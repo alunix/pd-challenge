@@ -72,7 +72,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         holder.mTextCity.setText(weather.city);
         holder.mTextTime.setText(weather.time);
         holder.mTextTempture.setText(weather.tempture);
-        holder.mImgOverlay.setImageResource(Weather.getTypeOverlayRes(weather.weatherType));
+        holder.mImgOverlay.setImageResource(getTypeOverlayRes(weather.weatherType));
 
         if (weather.photoUrl != null) {
             Glide.with(mActivity)
@@ -80,28 +80,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .centerCrop()
                     .into(holder.mImgBg);
-        } else {
-            RestFacade.searchPhotoByTag(weather.city, new Callback<FlickrPhoto>() {
-                @Override
-                public void success(FlickrPhoto flickrPhoto, Response response) {
-                    if ("ok".equals(flickrPhoto.stat) && flickrPhoto.photos.photo.size() > 0) {
-                        FlickrPhoto.Photo photo = flickrPhoto.photos.photo.get(0);
-                        String photoUrl = context.getString(R.string.url_flikr_photo, photo.farm, photo.server, photo.id, photo.secret);
-                        Log.d("photoUrl", photoUrl);
-                        weather.photoUrl = photoUrl;
-                        Glide.with(mActivity)
-                                .load(photoUrl)
-                                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                                .centerCrop()
-                                .into(holder.mImgBg);
-                    }
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
         }
 
         if (mEditEnabled) {
@@ -122,7 +100,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                 }
             });
         } else {
-            holder.mImgType.setImageResource(Weather.getTypeIconRes(weather.weatherType));
+            holder.mImgType.setImageResource(getTypeIconRes(weather.weatherType));
             holder.mImgType.setOnClickListener(null);
         }
 
@@ -168,6 +146,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     public void addItem(Weather weather) {
         mList.add(weather);
+        //TODO mover para camada de negócios como evento o save
         Weather.saveMyCitiesByWeatherList(mActivity, mList);
         notifyItemInserted(getItemCount());
         notifyItemRangeChanged(getItemCount() - 1, getItemCount());
@@ -215,6 +194,26 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             return R.layout.item_weather_first;
         } else {
             return R.layout.item_weather_any;
+        }
+    }
+
+    public int getTypeIconRes(int type) {
+        if (type == Weather.TYPE_SUN) {
+            return R.drawable.ic_sun;
+        } else if (type == Weather.TYPE_RAIN) {
+            return R.drawable.ic_rain;
+        } else {
+            return R.drawable.ic_cloudy;
+        }
+    }
+
+    public int getTypeOverlayRes(int type) {
+        if (type == Weather.TYPE_SUN) {
+            return R.drawable.overlay_3;
+        } else if (type == Weather.TYPE_RAIN) {
+            return R.drawable.overlay_1;
+        } else {
+            return R.drawable.overlay_2;
         }
     }
 }

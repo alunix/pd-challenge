@@ -11,12 +11,12 @@ import retrofit.RestAdapter;
  */
 public class RestFacade {
 
-    public static void searchPhotoByTag(String tag, Callback<FlickrPhoto> callback) {
+    public static FlickrPhoto searchPhotoByTag(String tag) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(RestApi.PHOTO_SEARCH_API_END_POINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
-        restAdapter.create(RestApi.class).searchPhotoByTag(tag, callback);
+        return restAdapter.create(RestApi.class).searchPhotoByTag(tag);
     }
 
     public static WeatherApiWrapper getWeatherByCity(String city) {

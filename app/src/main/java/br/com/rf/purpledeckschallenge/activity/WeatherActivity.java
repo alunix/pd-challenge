@@ -18,7 +18,7 @@ import br.com.rf.purpledeckschallenge.R;
 import br.com.rf.purpledeckschallenge.adapter.WeatherListAdapter;
 import br.com.rf.purpledeckschallenge.event.WeatherEvent;
 import br.com.rf.purpledeckschallenge.model.Weather;
-import br.com.rf.purpledeckschallenge.util.Constants;
+import br.com.rf.purpledeckschallenge.util.PrefKeys;
 import br.com.rf.purpledeckschallenge.util.PreferencesUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,9 +51,9 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public void init() {
-        if (PreferencesUtil.getBooleanPreference(this, Constants.PREF_KEY_FIRST_SETUP, true)) {
+        if (PreferencesUtil.getBooleanPreference(this, PrefKeys.PREF_KEY_FIRST_SETUP, true)) {
             Weather.saveMyCitiesByStringList(this, Weather.getDefaultCities());
-            PreferencesUtil.savePreference(this, Constants.PREF_KEY_FIRST_SETUP, false);
+            PreferencesUtil.savePreference(this, PrefKeys.PREF_KEY_FIRST_SETUP, false);
         }
     }
 
