@@ -32,7 +32,7 @@ public class Weather {
 
     public String city;
     public String time;
-    public String tempture;
+    public String temperature;
     public int weatherType;
     public String photoUrl;
 
@@ -40,17 +40,17 @@ public class Weather {
 
     }
 
-    public Weather(String city, String time, String tempture, int weatherType) {
+    public Weather(String city, String time, String temperature, int weatherType) {
         this.city = city;
         this.time = time;
-        this.tempture = tempture;
+        this.temperature = temperature;
         this.weatherType = weatherType;
     }
 
     public Weather(WeatherApiWrapper apiWrapper) {
         this.city = apiWrapper.getCity();
         this.time = apiWrapper.getDt();
-        this.tempture = apiWrapper.getTempture();
+        this.temperature = apiWrapper.getTempture();
         this.weatherType = apiWrapper.getWeatherType();
     }
 

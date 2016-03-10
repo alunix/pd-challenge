@@ -65,7 +65,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
         holder.mTextCity.setText(weather.city);
         holder.mTextTime.setText(weather.time);
-        holder.mTextTempture.setText(weather.tempture);
+        holder.mTextTempture.setText(weather.temperature);
         holder.mImgOverlay.setImageResource(getTypeOverlayRes(weather.weatherType));
 
         if (weather.photoUrl != null) {
