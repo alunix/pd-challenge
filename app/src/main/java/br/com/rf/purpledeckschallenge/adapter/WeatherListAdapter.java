@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,16 +26,11 @@ import java.util.List;
 
 import br.com.rf.purpledeckschallenge.R;
 import br.com.rf.purpledeckschallenge.event.WeatherEvent;
-import br.com.rf.purpledeckschallenge.http.RestFacade;
-import br.com.rf.purpledeckschallenge.model.FlickrPhoto;
 import br.com.rf.purpledeckschallenge.model.Weather;
 import br.com.rf.purpledeckschallenge.util.GUIUtils;
 import br.com.rf.purpledeckschallenge.util.StringUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by Rodrigo Ferreira on 5/03/2016.
@@ -198,9 +192,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     }
 
     public int getTypeIconRes(int type) {
-        if (type == Weather.TYPE_SUN) {
+        if (type == Weather.SUPPORTED_TYPE_SUN) {
             return R.drawable.ic_sun;
-        } else if (type == Weather.TYPE_RAIN) {
+        } else if (type == Weather.SUPPORTED_TYPE_RAIN) {
             return R.drawable.ic_rain;
         } else {
             return R.drawable.ic_cloudy;
@@ -208,9 +202,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     }
 
     public int getTypeOverlayRes(int type) {
-        if (type == Weather.TYPE_SUN) {
+        if (type == Weather.SUPPORTED_TYPE_SUN) {
             return R.drawable.overlay_3;
-        } else if (type == Weather.TYPE_RAIN) {
+        } else if (type == Weather.SUPPORTED_TYPE_RAIN) {
             return R.drawable.overlay_1;
         } else {
             return R.drawable.overlay_2;

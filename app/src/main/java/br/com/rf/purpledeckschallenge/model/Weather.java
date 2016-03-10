@@ -16,9 +16,19 @@ import br.com.rf.purpledeckschallenge.util.PreferencesUtil;
  */
 public class Weather {
 
-    public static final int TYPE_SUN = 0;
-    public static final int TYPE_RAIN = 1;
-    public static final int TYPE_CLOUDY = 2;
+    public static final int SUPPORTED_TYPE_SUN = 0;
+    public static final int SUPPORTED_TYPE_RAIN = 1;
+    public static final int SUPPORTED_TYPE_CLOUDY = 2;
+
+    private static final String UNSUPPORTED_TYPE_THUNDERSTORM = "Thunderstorm";
+    private static final String UNSUPPORTED_TYPE_DRIZZLE = "Drizzle";
+    private static final String UNSUPPORTED_TYPE_RAIN = "Rain";
+    private static final String UNSUPPORTED_TYPE_SNOW = "Snow";
+    private static final String UNSUPPORTED_TYPE_ATMOSPHERE = "Atmosphere";
+    private static final String UNSUPPORTED_TYPE_CLOUDS = "Clouds";
+    private static final String UNSUPPORTED_TYPE_EXTREME = "Extreme";
+    private static final String UNSUPPORTED_TYPE_ADDITIONAL = "Additional";
+    private static final String UNSUPPORTED_TYPE_HAZE = "Haze";
 
     public String city;
     public String time;
@@ -92,6 +102,22 @@ public class Weather {
         return false;
     }
 
+
+    public static int getSupportedWeatherType(String weatherType) {
+        weatherType = weatherType.toLowerCase();
+        if (UNSUPPORTED_TYPE_THUNDERSTORM.toLowerCase().equals(weatherType) || UNSUPPORTED_TYPE_DRIZZLE.toLowerCase().equals(weatherType)
+                || UNSUPPORTED_TYPE_RAIN.toLowerCase().equals(weatherType) || UNSUPPORTED_TYPE_SNOW.toLowerCase().equals(weatherType)) {
+            return SUPPORTED_TYPE_RAIN;
+        } else if (UNSUPPORTED_TYPE_ATMOSPHERE.toLowerCase().equals(weatherType) || UNSUPPORTED_TYPE_CLOUDS.toLowerCase().equals(weatherType)
+                || UNSUPPORTED_TYPE_EXTREME.toLowerCase().equals(weatherType) || UNSUPPORTED_TYPE_ADDITIONAL.toLowerCase().equals(weatherType)
+                || UNSUPPORTED_TYPE_HAZE.toLowerCase().equals(weatherType)) {
+            return SUPPORTED_TYPE_CLOUDY;
+        } else {
+            return SUPPORTED_TYPE_SUN;
+        }
+    }
+
+    //method for mock data
     public static Weather getRandomWeather(String city) {
         Random random = new Random();
         String time = String.valueOf(random.nextInt(24) + 1);
@@ -106,21 +132,5 @@ public class Weather {
             weatherList.add(Weather.getRandomWeather(city));
         }
         return weatherList;
-    }
-
-
-
-    public static int getSupportedWeatherType(String weatherType) {
-        weatherType = weatherType.toLowerCase();
-        if ("Thunderstorm".toLowerCase().equals(weatherType) || "Drizzle".toLowerCase().equals(weatherType)
-                || "Rain".toLowerCase().equals(weatherType) || "Snow".toLowerCase().equals(weatherType)) {
-            return TYPE_RAIN;
-        } else if ("Atmosphere".toLowerCase().equals(weatherType) || "Clouds".toLowerCase().equals(weatherType)
-                || "Extreme".toLowerCase().equals(weatherType) || "Additional".toLowerCase().equals(weatherType)
-                || "Haze".toLowerCase().equals(weatherType)) {
-            return TYPE_CLOUDY;
-        } else {
-            return TYPE_SUN;
-        }
     }
 }
