@@ -3,7 +3,6 @@ package br.com.rf.purpledeckschallenge.http;
 import br.com.rf.purpledeckschallenge.model.FlickrPhoto;
 import br.com.rf.purpledeckschallenge.model.TimeZoneApi;
 import br.com.rf.purpledeckschallenge.model.WeatherApiWrapper;
-import retrofit.Callback;
 import retrofit.RestAdapter;
 
 /**

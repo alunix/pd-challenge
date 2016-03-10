@@ -15,6 +15,7 @@ import java.util.List;
 
 import br.com.rf.purpledeckschallenge.R;
 import br.com.rf.purpledeckschallenge.event.WeatherEvent;
+import br.com.rf.purpledeckschallenge.helper.WeatherHelper;
 import br.com.rf.purpledeckschallenge.http.RestFacade;
 import br.com.rf.purpledeckschallenge.model.FlickrPhoto;
 import br.com.rf.purpledeckschallenge.model.Weather;
@@ -34,7 +35,7 @@ public class WeatherUseCase extends BaseUseCase {
     public void retrieveWeatherList(final WeatherEvent.RetrieveList event) {
         List<Weather> weatherList = new ArrayList<>();
         Exception exception = null;
-        for (String city : Weather.getMySavedCities(mContext)) {
+        for (String city : WeatherHelper.getMySavedCities(mContext)) {
             try {
                 WeatherApiWrapper apiWrapper = RestFacade.getWeatherByCity(city.toUpperCase());
                 apiWrapper.timeZoneId = RestFacade.getTimeZoneByLatLong(apiWrapper.getLocation()).timeZoneId;
@@ -60,23 +61,27 @@ public class WeatherUseCase extends BaseUseCase {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void AddCityToList(final WeatherEvent.AddCity event) {
-
-        WeatherApiWrapper apiWrapper = RestFacade.getWeatherByCity(event.city.toUpperCase());
-        EventBus.getDefault().post(new WeatherEvent().new ShowLoading());
-        if (apiWrapper != null && event.city.toLowerCase().equals(apiWrapper.getCity().toLowerCase())) {
-            apiWrapper.timeZoneId = RestFacade.getTimeZoneByLatLong(apiWrapper.getLocation()).timeZoneId;
-            Weather weather = new Weather(apiWrapper);
-            FlickrPhoto flickrPhoto = RestFacade.searchPhotoByTag(weather.city);
-            if ("ok".equals(flickrPhoto.stat) && flickrPhoto.photos.photo.size() > 0) {
-                FlickrPhoto.Photo photo = flickrPhoto.photos.photo.get(0);
-                String photoUrl = mContext.getString(R.string.url_flikr_photo, photo.farm, photo.server, photo.id, photo.secret);
-                Log.d("photoUrl", photoUrl);
-                weather.photoUrl = photoUrl;
+        try {
+            WeatherApiWrapper apiWrapper = RestFacade.getWeatherByCity(event.city.toUpperCase());
+            EventBus.getDefault().post(new WeatherEvent().new ShowLoading());
+            if (apiWrapper != null && event.city.toLowerCase().equals(apiWrapper.getCity().toLowerCase())) {
+                apiWrapper.timeZoneId = RestFacade.getTimeZoneByLatLong(apiWrapper.getLocation()).timeZoneId;
+                Weather weather = new Weather(apiWrapper);
+                FlickrPhoto flickrPhoto = RestFacade.searchPhotoByTag(weather.city);
+                if ("ok".equals(flickrPhoto.stat) && flickrPhoto.photos.photo.size() > 0) {
+                    FlickrPhoto.Photo photo = flickrPhoto.photos.photo.get(0);
+                    String photoUrl = mContext.getString(R.string.url_flikr_photo, photo.farm, photo.server, photo.id, photo.secret);
+                    Log.d("photoUrl", photoUrl);
+                    weather.photoUrl = photoUrl;
+                }
+                EventBus.getDefault().post(new WeatherEvent().new SuccessCityAdded(weather));
+            } else {
+                EventBus.getDefault().post(new WeatherEvent().new ErrorCityAdded(mContext.getString(R.string.msg_error_search_city)));
             }
-            EventBus.getDefault().post(new WeatherEvent().new SuccessCityAdded(weather));
-        } else {
-            EventBus.getDefault().post(new WeatherEvent().new ErrorCityAdded());
+        } catch (Exception e) {
+            EventBus.getDefault().post(new WeatherEvent().new ErrorCityAdded(mContext.getString(R.string.msg_error_generic)));
         }
+
     }
 
 }

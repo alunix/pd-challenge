@@ -26,6 +26,7 @@ import java.util.List;
 
 import br.com.rf.purpledeckschallenge.R;
 import br.com.rf.purpledeckschallenge.event.WeatherEvent;
+import br.com.rf.purpledeckschallenge.helper.WeatherHelper;
 import br.com.rf.purpledeckschallenge.model.Weather;
 import br.com.rf.purpledeckschallenge.util.GUIUtils;
 import br.com.rf.purpledeckschallenge.util.StringUtils;
@@ -89,7 +90,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                         mList.remove(position);
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, getItemCount());
-                        Weather.saveMyCitiesByWeatherList(context, mList);
+                        WeatherHelper.saveMyCitiesByWeatherList(context, mList);
                     }
                 }
             });
@@ -122,7 +123,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                                               KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_SEND && v.getText().toString().trim().length() > 0) {
                         GUIUtils.hideKeyboard(mActivity);
-                        if (!Weather.cityAlreadyExists(context, StringUtils.removeAccents(v.getText().toString().trim()))) {
+                        if (!WeatherHelper.cityAlreadyExists(context, StringUtils.removeAccents(v.getText().toString().trim()))) {
                             EventBus.getDefault().post(new WeatherEvent().new AddCity(StringUtils.removeAccents(v.getText().toString().trim())));
                             holder.mEditAddCity.setText("");
                             return true;
@@ -140,8 +141,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     public void addItem(Weather weather) {
         mList.add(weather);
-        //TODO mover para camada de negócios como evento o save
-        Weather.saveMyCitiesByWeatherList(mActivity, mList);
+        WeatherHelper.saveMyCitiesByWeatherList(mActivity, mList);
         notifyItemInserted(getItemCount());
         notifyItemRangeChanged(getItemCount() - 1, getItemCount());
 

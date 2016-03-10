@@ -36,7 +36,11 @@ public class WeatherEvent {
     }
 
     public class ErrorCityAdded {
+        public String msg;
 
+        public ErrorCityAdded(String msg) {
+            this.msg = msg;
+        }
     }
 
     public class CityAlreadyExists {

@@ -54,55 +54,6 @@ public class Weather {
         this.weatherType = apiWrapper.getWeatherType();
     }
 
-    public static List<String> getDefaultCities() {
-        return Arrays.asList(new String[]{"Dublin", "London", "Beijing", "Sydney"});
-    }
-
-    public static void saveMyCitiesByWeatherList(Context context, List<Weather> weatherList) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < weatherList.size(); i++) {
-            sb.append(weatherList.get(i).city);
-            if (i < weatherList.size() - 1) {
-                sb.append(";");
-            }
-        }
-        Log.d("saveCities", sb.toString());
-        PreferencesUtil.savePreference(context, PrefKeys.PREF_KEY_MY_CITIES, sb.toString());
-    }
-
-    public static void saveMyCitiesByStringList(Context context, List<String> citiesList) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < citiesList.size(); i++) {
-            sb.append(citiesList.get(i));
-            if (i < citiesList.size() - 1) {
-                sb.append(";");
-            }
-        }
-        Log.d("saveCities", sb.toString());
-        PreferencesUtil.savePreference(context, PrefKeys.PREF_KEY_MY_CITIES, sb.toString());
-    }
-
-    public static List<String> getMySavedCities(Context context) {
-        String mySavedCities = PreferencesUtil.getStringPreference(context, PrefKeys.PREF_KEY_MY_CITIES, null);
-        if (mySavedCities == null || mySavedCities.length() == 0) {
-            return new ArrayList<String>();
-        }
-        return Arrays.asList(mySavedCities.split(";"));
-
-    }
-
-    public static boolean cityAlreadyExists(Context context, String city) {
-        List<String> cities = Weather.getMySavedCities(context);
-
-        for (String savedCity : cities) {
-            if (city.toLowerCase().equals(savedCity.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     public static int getSupportedWeatherType(String weatherType) {
         weatherType = weatherType.toLowerCase();
         if (UNSUPPORTED_TYPE_THUNDERSTORM.toLowerCase().equals(weatherType) || UNSUPPORTED_TYPE_DRIZZLE.toLowerCase().equals(weatherType)
@@ -117,7 +68,7 @@ public class Weather {
         }
     }
 
-    //method for mock data
+    //methods for mock data
     public static Weather getRandomWeather(String city) {
         Random random = new Random();
         String time = String.valueOf(random.nextInt(24) + 1);

@@ -17,6 +17,7 @@ import java.util.List;
 import br.com.rf.purpledeckschallenge.R;
 import br.com.rf.purpledeckschallenge.adapter.WeatherListAdapter;
 import br.com.rf.purpledeckschallenge.event.WeatherEvent;
+import br.com.rf.purpledeckschallenge.helper.WeatherHelper;
 import br.com.rf.purpledeckschallenge.model.Weather;
 import br.com.rf.purpledeckschallenge.util.PrefKeys;
 import br.com.rf.purpledeckschallenge.util.PreferencesUtil;
@@ -52,7 +53,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     public void init() {
         if (PreferencesUtil.getBooleanPreference(this, PrefKeys.PREF_KEY_FIRST_SETUP, true)) {
-            Weather.saveMyCitiesByStringList(this, Weather.getDefaultCities());
+            WeatherHelper.saveMyCitiesByStringList(this, WeatherHelper.getDefaultCities());
             PreferencesUtil.savePreference(this, PrefKeys.PREF_KEY_FIRST_SETUP, false);
         }
     }
@@ -112,7 +113,7 @@ public class WeatherActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void errorCityAdded(WeatherEvent.ErrorCityAdded event) {
         dismissLoading();
-        Toast.makeText(this, R.string.msg_error_search_city, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, event.msg, Toast.LENGTH_LONG).show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
