@@ -19,7 +19,7 @@ public interface RestApi {
     @GET("/rest/?method=flickr.photos.search&api_key=34fc09eb49b0653e3bf5c3f7d94f44fa&format=json&nojsoncallback=1&accuracy=6-11&tags=landmark")
     FlickrPhoto searchPhotoByTag(@Query("text") String tag);
 
-    @GET("/2.5/weather?units=metric&appid=44db6a862fba0b067b1930da0d769e98")
+    @GET("/2.5/weather?units=metric&appid=2042aca6e63e2d0b6c9dead41a19e999")
     WeatherApiWrapper getWeatherByCity(@Query("q") String city);
 
     @GET("/timezone/json?timestamp=0&key=AIzaSyC-XqUCO7YhFJ7TIrG2wLDFTS3g7958e7s")
