@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">purpledecks challenge</string>
+    <string name="app_name">pd challenge</string>
 
     <!--weatherActivity-->
     <string name="msg_error_search_city">Sorry, we didn\'t found the city that you\'ve searched :/</string>

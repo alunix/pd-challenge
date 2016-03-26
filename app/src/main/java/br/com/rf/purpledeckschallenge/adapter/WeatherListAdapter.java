@@ -75,6 +75,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .centerCrop()
                     .into(holder.mImgBg);
+        } else {
+            holder.mImgBg.setImageDrawable(null);
         }
 
         if (mEditEnabled) {
