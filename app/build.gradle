@@ -12,7 +12,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
     defaultConfig {
-        applicationId "br.com.rf.purpledeckschallenge"
+        applicationId "br.com.rf.pdchallenge"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -20,7 +20,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
