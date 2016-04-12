@@ -148,7 +148,6 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         unregisterForEvent();
     }
 }
