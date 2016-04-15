@@ -2,6 +2,8 @@
 
 This app was made for a Challenge.
 
+![pd-challenge.png](/pd-challenge.png)
+
 ###The goal is 
 
 Design a weather application. The application should allow the user to download and display today's weather in a specified city. You may use any suitable 3rd party RESTful API to supply the weather data.
